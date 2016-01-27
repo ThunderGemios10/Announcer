@@ -1,0 +1,14 @@
+#######################################################
+##                   Created By                      ##
+##                    Deckerz                        ##
+#######################################################
+announcement:
+    enabled: true
+    random: false
+    prefix: '&c[Announcement] '
+    interval: 100
+    check-for-updates: true
+    auto-update: false
+    messages:
+    - 'Use /announce help to get info how to config this plugin.'
+    - 'Created by Deckerz'
