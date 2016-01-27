@@ -1,0 +1,46 @@
+name: Announcer
+main: me.declanmc96.Announcer.Announcer
+version: 1.5
+description: Automatically Announce tips and news!
+authors:
+ - 'declanmc96'
+
+commands:
+  announce:
+    description: Managing Announcements
+    usage: /<command> help - Displays the help for Announcer
+  announcer:
+    description: Alias for /announce
+    usage: /<command> help - Displays the help for Announcer
+  acc:
+    description: Alias for /announce
+    usage: /<command> help - Displays the help for Announcer
+
+permissions:
+    announcer.*:
+        description: Gives access to all commands for managing announcments
+        children:
+            announcer.receiver: true
+            announcer.add: true
+            announcer.delete: true
+            announcer.broadcast: true
+            announcer.moderate: true
+            announcer.admin: true
+    announcer.receiver:
+        description: Allows you to receive the notifications
+        default: true
+    announcer.add:
+        description: Allows you to add a notification
+        default: op
+    announcer.delete:
+        description: Allows you to delete notifications
+        default: op
+    announcer.broadcast:
+        description: Allows you to just broadcast notfications
+        default: op
+    announcer.moderate:
+        description: Allows you to change properties the plugin.
+        default: op
+    announce.admin:
+        description: Allows you load, save and restart the plugin.
+        default: op
