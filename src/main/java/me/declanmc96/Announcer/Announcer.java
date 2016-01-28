@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import me.declanmc96.Announcer.metrics.Metrics;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.command.PluginCommand;
@@ -17,6 +17,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
+
+import me.declanmc96.Announcer.metrics.Metrics;
 import me.thundergemios10.updater.Updater;
 import me.thundergemios10.updater.Updater.UpdateResult;
 import me.thundergemios10.updater.Updater.UpdateType;
