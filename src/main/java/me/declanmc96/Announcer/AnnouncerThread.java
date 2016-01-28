@@ -6,7 +6,7 @@ public class AnnouncerThread
   extends Thread
 {
   private final Random randomGenerator = new Random();
-  private final announcer plugin;
+  private final Announcer plugin;
   private int lastAnnouncement = 0;
   
   public AnnouncerThread(Announcer plugin)
