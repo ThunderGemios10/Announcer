@@ -17,7 +17,9 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
-
+import me.declanmc96.Announcer.updater.Updater;
+import me.declanmc96.Announcer.updater.Updater.UpdateResult;
+import me.declanmc96.Announcer.updater.Updater.UpdateType;
 
 public class Announcer
   extends JavaPlugin
@@ -46,6 +48,18 @@ public class Announcer
     {
       Metrics metrics = new Metrics(this);
       metrics.start();
+    }
+    catch (IOException localIOException) {}
+    if (getConfig().getBoolean("announcement.check-for-updates"))
+    {
+      Updater updater = new Updater(this, 40864, getFile(), Updater.UpdateType.NO_DOWNLOAD, false);
+      update = updater.getResult() == Updater.UpdateResult.UPDATE_AVAILABLE;
+      if ((update) && (getConfig().getBoolean("announcement.auto-update"))) {
+        Updater localUpdater1 = new Updater(this, 40864, getFile(), Updater.UpdateType.NO_VERSION_CHECK, true);
+      } else if (update) {
+        getServer().getLogger().log(Level.WARNING, "There is an update for announcer!");
+      }
+    }
     if (!new File(getDataFolder(), "config.yml").exists()) {
       saveDefaultConfig();
     }
@@ -60,7 +74,7 @@ public class Announcer
     getCommand("acc").setExecutor(announcerCommandExecutor);
     
     this.logger.info(String.format("%s is enabled!\n", new Object[] { getDescription().getFullName() }));
-    }
+  }
   
   public void onDisable()
   {
@@ -222,4 +236,8 @@ public class Announcer
     saveConfiguration();
   }
   
+  public void update()
+  {
+    Updater updater = new Updater(this, 40864, getFile(), Updater.UpdateType.NO_VERSION_CHECK, true);
+  }
 }
