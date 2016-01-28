@@ -1,9 +1,11 @@
 package me.declanmc96.Announcer;
 
+import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.plugin.PluginDescriptionFile;
 
 public class AnnouncerCommandExecutor
   implements CommandExecutor
@@ -20,8 +22,16 @@ public class AnnouncerCommandExecutor
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
   {
     boolean success = false;
-
-    if ("help".equalsIgnoreCase(args[0]))
+    if ((args.length == 0) || (args[0].equalsIgnoreCase("version")) || (args[0].equalsIgnoreCase("info")))
+    {
+      success = onVersionCommand(sender, command, label, args);
+    }
+    else if ("update".equalsIgnoreCase(args[0]))
+    {
+      this.plugin.update();
+      success = true;
+    }
+    else if ("help".equalsIgnoreCase(args[0]))
     {
       success = onHelpCommand(sender, command, label, args);
     }
