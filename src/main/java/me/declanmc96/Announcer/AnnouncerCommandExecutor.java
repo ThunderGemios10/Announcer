@@ -1,20 +1,18 @@
 package me.declanmc96.Announcer;
 
-import java.util.List;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.plugin.PluginDescriptionFile;
 
 public class AnnouncerCommandExecutor
   implements CommandExecutor
 {
   private static final int ENTRIES_PER_PAGE = 7;
-  private final announcer plugin;
+  private final Announcer plugin;
   public boolean success;
   
-  announcerCommandExecutor(announcer plugin)
+  AnnouncerCommandExecutor(Announcer plugin)
   {
     this.plugin = plugin;
   }
@@ -22,16 +20,8 @@ public class AnnouncerCommandExecutor
   public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
   {
     boolean success = false;
-    if ((args.length == 0) || (args[0].equalsIgnoreCase("version")) || (args[0].equalsIgnoreCase("info")))
-    {
-      success = onVersionCommand(sender, command, label, args);
-    }
-    else if ("update".equalsIgnoreCase(args[0]))
-    {
-      this.plugin.update();
-      success = true;
-    }
-    else if ("help".equalsIgnoreCase(args[0]))
+
+    if ("help".equalsIgnoreCase(args[0]))
     {
       success = onHelpCommand(sender, command, label, args);
     }
@@ -243,7 +233,7 @@ public class AnnouncerCommandExecutor
         int indexStart = Math.abs(page - 1) * 7;
         int indexStop = Math.min(page * 7, this.plugin.announcementMessages.size());
         for (int index = indexStart + 1; index <= indexStop; index++) {
-          sender.sendMessage(String.format("%d - %s", new Object[] { Integer.valueOf(index), chatColorHelper.replaceColorCodes(
+          sender.sendMessage(String.format("%d - %s", new Object[] { Integer.valueOf(index), ChatColorHelper.replaceColorCodes(
             this.plugin.getAnnouncement(index)) }));
         }
       }
@@ -342,7 +332,7 @@ public class AnnouncerCommandExecutor
       else
       {
         sender.sendMessage(String.format("%sPrefix is %s", new Object[] { ChatColor.LIGHT_PURPLE, 
-          chatColorHelper.replaceColorCodes(this.plugin.getAnnouncementPrefix()) }));
+          ChatColorHelper.replaceColorCodes(this.plugin.getAnnouncementPrefix()) }));
       }
       return true;
     }
