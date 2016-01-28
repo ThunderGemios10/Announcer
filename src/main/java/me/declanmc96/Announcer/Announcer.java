@@ -17,9 +17,9 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
-import me.declanmc96.Announcer.updater.Updater;
-import me.declanmc96.Announcer.updater.Updater.UpdateResult;
-import me.declanmc96.Announcer.updater.Updater.UpdateType;
+import me.thundergemios10.updater.Updater;
+import me.thundergemios10.updater.Updater.UpdateResult;
+import me.thundergemios10.updater.Updater.UpdateType;
 
 public class Announcer
   extends JavaPlugin
