@@ -17,9 +17,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
-import updater.Updater;
-import updater.Updater.UpdateResult;
-import updater.Updater.UpdateType;
+
 
 public class Announcer
   extends JavaPlugin
@@ -30,15 +28,15 @@ public class Announcer
   protected long announcementInterval;
   protected boolean enabled;
   protected boolean random;
-  private announcerThread announcerThread;
+  private AnnouncerThread announcerThread;
   private Logger logger;
   public static boolean update = false;
   public static String name = "";
   public static long size = 0L;
   
-  public announcer()
+  public Announcer()
   {
-    this.announcerThread = new announcerThread(this);
+    this.announcerThread = new AnnouncerThread(this);
   }
   
   public void onEnable()
@@ -48,18 +46,6 @@ public class Announcer
     {
       Metrics metrics = new Metrics(this);
       metrics.start();
-    }
-    catch (IOException localIOException) {}
-    if (getConfig().getBoolean("announcement.check-for-updates"))
-    {
-      Updater updater = new Updater(this, 40864, getFile(), Updater.UpdateType.NO_DOWNLOAD, false);
-      update = updater.getResult() == Updater.UpdateResult.UPDATE_AVAILABLE;
-      if ((update) && (getConfig().getBoolean("announcement.auto-update"))) {
-        Updater localUpdater1 = new Updater(this, 40864, getFile(), Updater.UpdateType.NO_VERSION_CHECK, true);
-      } else if (update) {
-        getServer().getLogger().log(Level.WARNING, "There is an update for announcer!");
-      }
-    }
     if (!new File(getDataFolder(), "config.yml").exists()) {
       saveDefaultConfig();
     }
@@ -68,13 +54,13 @@ public class Announcer
     BukkitScheduler scheduler = getServer().getScheduler();
     scheduler.scheduleSyncRepeatingTask(this, this.announcerThread, this.announcementInterval * 20L, this.announcementInterval * 20L);
     
-    announcerCommandExecutor announcerCommandExecutor = new announcerCommandExecutor(this);
+    AnnouncerCommandExecutor announcerCommandExecutor = new AnnouncerCommandExecutor(this);
     getCommand("announce").setExecutor(announcerCommandExecutor);
     getCommand("announcer").setExecutor(announcerCommandExecutor);
     getCommand("acc").setExecutor(announcerCommandExecutor);
     
     this.logger.info(String.format("%s is enabled!\n", new Object[] { getDescription().getFullName() }));
-  }
+    }
   
   public void onDisable()
   {
@@ -110,9 +96,9 @@ public class Announcer
       {
         getServer().dispatchCommand(getServer().getConsoleSender(), message.substring(1));
       }
-      else if (getServer().getOnlinePlayers().length > 0)
+      else if (getServer().getOnlinePlayers().size() > 0)
       {
-        String messageToSend = chatColorHelper.replaceColorCodes(String.format("%s%s", new Object[] { this.announcementPrefix, message }));
+        String messageToSend = ChatColorHelper.replaceColorCodes(String.format("%s%s", new Object[] { this.announcementPrefix, message }));
         for (Player player : Bukkit.getServer().getOnlinePlayers()) {
           if (player.hasPermission("announcer.receiver"))
           {
@@ -120,7 +106,7 @@ public class Announcer
               messageToSend = messageToSend.replace("[player]", player.getDisplayName());
             }
             if (messageToSend.contains("[online]")) {
-              messageToSend = messageToSend.replace("[online]", getServer().getOnlinePlayers().length + "/" + getServer().getMaxPlayers());
+              messageToSend = messageToSend.replace("[online]", getServer().getOnlinePlayers().size() + "/" + getServer().getMaxPlayers());
             }
             if (messageToSend.contains("[health]"))
             {
@@ -236,8 +222,4 @@ public class Announcer
     saveConfiguration();
   }
   
-  public void update()
-  {
-    Updater updater = new Updater(this, 40864, getFile(), Updater.UpdateType.NO_VERSION_CHECK, true);
-  }
 }
