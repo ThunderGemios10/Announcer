@@ -1,6 +1,6 @@
 #######################################################
 ##                   Created By                      ##
-##                    Deckerz                        ##
+##                    Deckerz, ThunderGemios10       ##
 #######################################################
 announcement:
     enabled: true
@@ -12,3 +12,4 @@ announcement:
     messages:
     - 'Use /announce help to get info how to config this plugin.'
     - 'Created by Deckerz'
+    - 'Maintained by ThunderGemios10'
