@@ -1,5 +1,5 @@
 package me.declanmc96.Announcer;
-
+ 
 public final class AnnouncerPermissions
 {
   public static final String RECEIVER = "announcer.receiver";

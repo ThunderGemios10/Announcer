@@ -110,8 +110,8 @@ public class Announcer extends JavaPlugin implements Listener
         String[] messages = line.split("&n");
         for (String message : messages)
             if (message.startsWith("/")) {
-                getServer().dispatchCommand(getServer().getConsoleSender(), message.substring(1));
-            } else if (getServer().getOnlinePlayers().size() > 0) {
+                Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), message.substring(1));
+            } else if (Bukkit.getServer().getOnlinePlayers().size() > 0) {
                 String messageToSend = ChatColorHelper.replaceColorCodes(String.format("%s%s", new Object[] { this.announcementPrefix, message }));
                 for (Player player : Bukkit.getServer().getOnlinePlayers())
                     if (player.hasPermission("announcer.receiver"))
